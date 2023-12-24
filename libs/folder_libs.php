@@ -11,7 +11,14 @@ function getFolders() {
     $stmt->execute([':user_id'=>$user_id]) ;
     return $stmt->fetchAll() ;
 }
-
+function getCurrentFolders() {
+    global $pdo ;
+    $user_id = getCurentUserId() ;
+    $sql = "SELECT * FROM `folders` WHERE user_id=:user_id" ;
+    $stmt = $pdo -> prepare($sql) ;
+    $stmt->execute([':user_id'=>$user_id]) ;
+    return $stmt->fetchAll(PDO::FETCH_OBJ) ;
+}
 function addFolder(string $folder_data):bool{
     global $pdo ;
     $user_id = getCurentUserId() ;

@@ -55,7 +55,7 @@ function updateTask(int $taskId , $title){
 function getTaskById(int $id){
     global $pdo ;
     $user_id = getCurentUserId() ;
-    $sql = "SELECT * FROM `tasks` WHERE id=:id" ;
+    $sql = "SELECT * FROM `tasks` WHERE id=:id " ;
     $stmt = $pdo -> prepare($sql) ;
     $stmt->execute([':id'=>$id]) ;
     return $stmt->fetch(PDO::FETCH_OBJ) ;

@@ -3,6 +3,8 @@ require 'bootstrap/init.php' ;
 
 if (isset($_GET['update_task']) && is_numeric($_GET['update_task'])) {
     $task_data = getTaskById($_GET['update_task']) ?? null;
+    $folders = getCurrentFolders() ;
+    print_r($folders) ;
     $task_id = $_GET['update_task'] ?? null;
 }
 
