@@ -17,7 +17,7 @@ function getTasks() {
     return $stmt->fetchAll() ;
 }
 
-function addTask(string $task_title, $folder_id):bool{
+function addTask(string $task_title,int $folder_id):bool{
     global $pdo ;
     $user_id = getCurentUserId() ;
     $sql = 'INSERT INTO `tasks`(title,user_id,folder_id)VALUES(:title,:user_id,:folder_id) ' ;
@@ -43,15 +43,6 @@ function doneSwitch(int $taskId):bool{
     return $stmt->rowCount() ? true : false ;
 }
 
-function updateTask(int $taskId , $title){
-    global $pdo ;
-    $user_id = getCurentUserId() ;
-    $sql = "UPDATE `tasks` SET title=:title WHERE id=:id" ;
-    $stmt = $pdo->prepare($sql) ;
-    $stmt->execute([':title'=>$title,':id'=>$taskId]) ;
-    return $stmt->rowCount() ? true : false ;
-}
-
 function getTaskById(int $id){
     global $pdo ;
     $user_id = getCurentUserId() ;
@@ -59,4 +50,22 @@ function getTaskById(int $id){
     $stmt = $pdo -> prepare($sql) ;
     $stmt->execute([':id'=>$id]) ;
     return $stmt->fetch(PDO::FETCH_OBJ) ;
+}
+
+function getCurrentFolderIdByName($folderName) {
+    global $pdo ;
+    $user_id = getCurentUserId() ;
+    $sql = "SELECT id FROM `folders` WHERE name=:name" ;
+    $stmt = $pdo -> prepare($sql) ;
+    $stmt->execute([':name'=>$folderName]) ;
+    return $stmt->fetch(PDO::FETCH_OBJ) ;
+}
+
+function updateTask(int $taskId ,string $title ,int $folder_id):bool{
+    global $pdo ;
+    $user_id = getCurentUserId() ;
+    $sql = "UPDATE `tasks` SET title=:title ,folder_id=:folder_id  WHERE id=:id" ;
+    $stmt = $pdo->prepare($sql) ;
+    $stmt->execute([':title'=>$title,':id'=>$taskId , ':folder_id'=>$folder_id]) ;
+    return $stmt->rowCount() ? true : false ;
 }

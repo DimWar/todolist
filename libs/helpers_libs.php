@@ -10,16 +10,16 @@ function redirect(string $target = BASE_URL):void{
     die();
 }
 
-function setMessageAndRedirect(string $message , string $erorr = null , string $target):void{
-    $_SESSION['error'] = $message . '(' .  $erorr   .  ')';
+function setMessageAndRedirect(string $message , string $target):void{
+    $_SESSION['error'] = $message ;
     redirect( siteUrl($target) ) ;
 }
 
-function setMessage( $message):void{
-    $_SESSION['error'] = $message ;
+function setMessage(string $message):void{
+    $_SESSION['messgae'] = $message ;
 }
 
-function dd($message){
+function pre($message){
     echo "<pre>" ;
     print_r($message) ;
     echo "</pre>" ;
